@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <title>FrontEnd</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+  <script>
+    // Resize observer to communicate with the parent window.
+    // This code is meant to be used inside an iframe
+    // so ajax calls automatically go to the layout-less endpoints.
+    const resizeObserver = new ResizeObserver(entries => {
+      console.log("RESIIZE", {height: document.body.scrollHeight });
+      window.parent.postMessage({height: document.body.scrollHeight })
+    }
+    )
+    resizeObserver.observe(document.body);
+  </script>
+</body>
+</html>

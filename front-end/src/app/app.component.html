@@ -1,0 +1,12 @@
+<app-changes-viewer></app-changes-viewer>
+
+<div class="settings-selector">
+  <div (click)="selectedSettings = apiManager.serverSettings">Server Settings</div>
+  <ng-container *ngFor="let world of apiManager.worlds">
+    | 
+    <div (click)="selectedSettings = world">{{world.WorldName}}</div>
+  </ng-container>
+</div>
+<app-settings-viewer *ngIf="selectedSettings != null" [settings]="selectedSettings">
+    
+</app-settings-viewer>

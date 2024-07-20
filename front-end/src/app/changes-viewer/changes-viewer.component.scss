@@ -1,0 +1,18 @@
+.main {
+    width: 99%;
+    border: 1px solid darkgreen;
+    border-radius: 4px;
+    background-color: lightgray;
+    padding: 2px;
+}
+
+.header-bar
+{
+    display:flex;
+    justify-content: space-between;
+}
+
+.border-bottom
+{
+    border-bottom: 1px solid black;
+}

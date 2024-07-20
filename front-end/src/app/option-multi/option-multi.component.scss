@@ -1,0 +1,12 @@
+.selector
+{
+    display:grid;
+    grid-template-columns: repeat(2, auto);
+    // flex-direction: row;
+}
+
+.selector > div
+{
+    max-height: 300px;
+    overflow-y: scroll;
+}

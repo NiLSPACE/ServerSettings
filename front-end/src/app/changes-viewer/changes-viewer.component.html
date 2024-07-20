@@ -1,0 +1,20 @@
+<div *ngIf="changeManager.changes" class="main">
+    <div class="header-bar" (click)="switchIsExpanded()" [class.border-bottom]="isExpanded && changeManager.changes.length > 0">
+        <span>{{changeManager.changes.length}} change<ng-container *ngIf="changeManager.changes.length != 1">s</ng-container></span>
+        <span *ngIf="isExpanded">▲</span>
+        <span *ngIf="!isExpanded">▼</span>
+    </div>
+    <ng-container *ngIf="isExpanded">
+        <div *ngFor="let settingsGroup of changeManager.changes | groupBy: 'worldName'">
+            <h3>{{(settingsGroup.key | ifNull: 'Server Settings')}} </h3>
+            <ng-container *ngFor="let group of settingsGroup.value | groupBy: 'categoryName'">
+                <strong>{{group.key}} </strong>
+
+                <div *ngFor="let change of group.value">
+                    {{change.target}} {{change.option.Name}}: {{formatValue(change.option, change.option.OriginalValue)}} → {{formatValue(change.option, change.newValue)}}
+                    
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>
