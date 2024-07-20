@@ -8,17 +8,21 @@
         <div class="filler"></div>
         <ng-container *ngFor="let option of category.Options">
             <ng-container *ngIf="conditionsMet(option)">
-                <div class="sub-header">{{option.Name}}</div>
-                
-                <div>
-                    <input *ngIf="option.Type == 'bool'"   (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" type="checkbox" [checked]="option.CurrentValue == '1'" (change)="option.CurrentValue = getValue($event)">
-                    <input *ngIf="option.Type == 'string'" (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" type="text" [(ngModel)]="option.CurrentValue">
-                    <input *ngIf="option.Type == 'number'" (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" type="number" [(ngModel)]="option.CurrentValue" >
-                    <select *ngIf="option.Type == 'options'" (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" [(ngModel)]="option.CurrentValue">
-                        <option *ngFor="let subOption of option.SubOptions" [value]="formatSubOptionTitle(subOption)">{{formatSubOptionTitle(subOption)}}</option>
-                    </select>
-                    <app-option-multi *ngIf="option.Type == 'multi'" (change)="changeManager.addChange(settings, category.CategoryName, option, $event)" [option]="option"></app-option-multi>
-                </div>
+                <ng-container *ngIf="(option.Type == 'header'); else options">
+                    <div class="option-header">{{option.Name}}</div><div></div>
+                </ng-container>
+                <ng-template #options>
+                    <div class="sub-header">{{option.Name}}</div>
+                    <div>
+                        <input *ngIf="option.Type == 'bool'"   (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" type="checkbox" [checked]="option.CurrentValue == '1'" (change)="option.CurrentValue = getValue($event)">
+                        <input *ngIf="option.Type == 'string'" (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" type="text" [(ngModel)]="option.CurrentValue">
+                        <input *ngIf="option.Type == 'number'" (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" type="number" [(ngModel)]="option.CurrentValue" >
+                        <select *ngIf="option.Type == 'options'" (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" [(ngModel)]="option.CurrentValue">
+                            <option *ngFor="let subOption of option.SubOptions" [value]="formatSubOptionTitle(subOption)">{{formatSubOptionTitle(subOption)}}</option>
+                        </select>
+                        <app-option-multi *ngIf="option.Type == 'multi'" (change)="changeManager.addChange(settings, category.CategoryName, option, $event)" [option]="option"></app-option-multi>
+                    </div>
+                </ng-template>
             </ng-container>
         </ng-container>
     </ng-container>

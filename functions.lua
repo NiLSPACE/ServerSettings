@@ -26,8 +26,10 @@ function MergeSettingsWithIni(a_IniFilePath, a_MergeObject)
             -- local numValues = 
         else
             for io, option in ipairs(category.Options) do
-                option.OriginalValue = ini:GetValue(category.CategoryName, option.Name)
-                option.CurrentValue = option.OriginalValue
+                if (option.Type ~= "header") then
+                    option.OriginalValue = ini:GetValue(category.CategoryName, option.Name)
+                    option.CurrentValue = option.OriginalValue
+                end
             end
         end
     end

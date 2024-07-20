@@ -213,7 +213,7 @@ g_WorldSettings =
                 Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "Constant")
             },
 --------------------------------------------------------------------------------------
-------------------------------Shape Gen-----------------------------------------
+------------------------------------Shape Gen-----------------------------------------
 --------------------------------------------------------------------------------------
             {
                 Name = "ShapeGen",
@@ -226,6 +226,26 @@ g_WorldSettings =
                 },
 
                 Condition = ComposableTarget
+            },
+
+--------------------------------------------------------------------------------------
+------------------------------------Height Gen-----------------------------------------
+--------------------------------------------------------------------------------------
+            {
+                Name = "HeightGen",
+                Type = "options",
+                SubOptions =
+                {
+                    "Flat",
+                },
+
+                Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "HeightMap")
+            },
+
+            {
+                Name = "FlatHeight",
+                Type = "number",
+                Condition = CreateCondition("Generator", "HeightGen", Method.Equals, "Flat")
             },
 
 --------------------------------------------------------------------------------------
@@ -266,42 +286,45 @@ g_WorldSettings =
                 },
                 Condition = ComposableTarget
             },
-            {
-                Name = "VillageGridSize",
-                Type = "number",
-                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
-            },
-            {
-                Name = "VillageMaxOffset",
-                Type = "number",
-                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
-            },
-            {
-                Name = "VillageMaxDepth",
-                Type = "number",
-                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
-            },
-            {
-                Name = "VillageMaxSize",
-                Type = "number",
-                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
-            },
-            {
-                Name = "VillageMinDensity",
-                Type = "number",
-                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
-            },
-            {
-                Name = "VillageMaxDensity",
-                Type = "number",
-                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
-            },
-            {
-                Name = "VillagePrefabs",
-                Type = "multi",
-                SubOptions = GetFilesWithoutExtensions("Prefabs/Villages"),
-                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
-            },
+            { Name = 'Villages',                  Type = 'header', Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")},
+            { Name = "VillageGridSize",           Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")},
+            { Name = "VillageMaxOffset",          Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")},
+            { Name = "VillageMaxDepth",           Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")},
+            { Name = "VillageMaxSize",            Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")},
+            { Name = "VillageMinDensity",         Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")},
+            { Name = "VillageMaxDensity",         Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village") },
+            { Name = "VillagePrefabs",            Type = "multi",  Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village"), SubOptions = GetFilesWithoutExtensions("Prefabs/Villages"),  },
+
+            { Name = 'MineShafts',                Type = 'header', Condition = CreateCondition("Generator", "Finishers", Method.Includes, "MineShafts") },
+            { Name = "MineShaftsGridSize",        Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "MineShafts") },
+            { Name = "MineShaftsMaxOffset",       Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "MineShafts") },
+            { Name = "MineShaftsMaxSystemSize",   Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "MineShafts") },
+            { Name = "MineShaftsChanceCorridor",  Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "MineShafts") },
+            { Name = "MineShaftsChanceCrossing",  Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "MineShafts") },
+            { Name = "MineShaftsChanceStaircase", Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "MineShafts") },
+            
+            { Name = 'WormNestCaves',             Type = 'header', Condition = CreateCondition("Generator", "Finishers", Method.Includes, "WormNestCaves") },
+            { Name = "WormNestCavesSize",         Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "WormNestCaves") },
+            { Name = "WormNestCavesGrid",         Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "WormNestCaves") },
+            { Name = "WormNestMaxOffset",         Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "WormNestCaves") },
+            
+            { Name = "RoughRavines",                       Type = "header", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesGridSize",               Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMaxOffset",              Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMaxSize",                Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMinSize",                Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMaxCenterWidth",         Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMinCenterWidth",         Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMaxRoughness",           Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMinRoughness",           Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMaxFloorHeightEdge",     Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMinFloorHeightEdge",     Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMaxFloorHeightCenter",   Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMinFloorHeightCenter",   Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMaxCeilingHeightEdge",   Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMinCeilingHeightEdge",   Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMaxCeilingHeightCenter", Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+            { Name = "RoughRavinesMinCeilingHeightCenter", Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
         }
     }
 }
