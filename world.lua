@@ -32,10 +32,52 @@ local ComposableTarget =
         OptionName = "Generator",
     },
     ExpectedValue = "Composable",
-    Method = "equals"
+    Method = Method.Equals
 }
 
 
+
+function GetFilesWithoutExtensions(a_Path)
+    local files = cFile:GetFolderContents(a_Path);
+    for i, file in ipairs(files) do
+        files[i] = file:match("(.+)%.%w+$")
+    end
+    return files;
+end
+
+
+
+
+function GetBiomeNames()
+    local output = {}
+    for i = biOcean, biNumVariantBiomes do
+        local biomeName = BiomeToString(i)
+        if (biomeName ~= "") then
+            table.insert(output, biomeName);
+        end
+    end
+    -- Cuberite translates biEnd to "Sky" and biNether to "Hell"
+    table.insert(output, "End")
+    table.insert(output, "Nether")
+    table.sort(output);
+    return output;
+end
+
+
+
+
+function CreateCondition(a_CategoryName, a_OptionName, a_Method, a_ExpectedValue)
+    return
+    {
+        Target =
+        {
+            CategoryName = a_CategoryName,
+            OptionName = a_OptionName,
+        },
+        Method = a_Method,
+        ExpectedValue = a_ExpectedValue
+    }
+end
 
 
 
@@ -120,6 +162,11 @@ g_WorldSettings =
                 SubOptions = CollectWorldNames()
             },
             {
+                Name = "OverworldName",
+                Type = "options",
+                SubOptions = CollectWorldNames()
+            },
+            {
                 Name = "EndWorldName",
                 Type = "options",
                 SubOptions = CollectWorldNames()
@@ -139,6 +186,9 @@ g_WorldSettings =
                     "Noise3D"
                 }
             },
+--------------------------------------------------------------------------------------
+------------------------------Biome Gen-----------------------------------------
+--------------------------------------------------------------------------------------
             {
                 Name = "BiomeGen",
                 Type = "options",
@@ -157,6 +207,15 @@ g_WorldSettings =
                 Condition = ComposableTarget
             },
             {
+                Name = "ConstantBiome",
+                Type = "options",
+                SubOptions = GetBiomeNames(),
+                Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "Constant")
+            },
+--------------------------------------------------------------------------------------
+------------------------------Shape Gen-----------------------------------------
+--------------------------------------------------------------------------------------
+            {
                 Name = "ShapeGen",
                 Type = "options",
                 SubOptions =
@@ -168,6 +227,10 @@ g_WorldSettings =
 
                 Condition = ComposableTarget
             },
+
+--------------------------------------------------------------------------------------
+------------------------------Composition Gen-----------------------------------------
+--------------------------------------------------------------------------------------
             {
                 Name = "CompositionGen",
                 Type = "options",
@@ -178,25 +241,67 @@ g_WorldSettings =
                     "End",
                     "Classic",
                 },
-
                 Condition = ComposableTarget
             },
+--------------------------------------------------------------------------------------
+------------------------------------Finishers-----------------------------------------
+--------------------------------------------------------------------------------------
             {
                 Name = "Finishers",
                 Type = "multi",
                 SubOptions =
                 {
-                    "Animals", "BottomLava", "DeadBushes", "DirectOverhangs", "DirtPockets", "DistortedMembraneOverhangs", "DualRidgeCaves", "DungeonRooms", "EnderDragonFightStructures", "ForestRocks", "GlowStone", "Ice", "LavaLakes", "LavaSprings", "Lilypads", "MarbleCaves", "MineShafts", "NaturalPatches", "NetherClumpFoliage", "NetherOreNests", "OreNests", "OrePockets", "OverworldClumpFlowers", "PieceStructures", "PreSimulator", "Ravines", "RoughRavines", 
+                    "Animals", "BottomLava", "DeadBushes", "DirectOverhangs", "DirtPockets", "DistortedMembraneOverhangs", "DualRidgeCaves", "DungeonRooms", "EnderDragonFightStructures", "ForestRocks", "GlowStone", "Ice", "LavaLakes", "LavaSprings", "Lilypads", "MarbleCaves", "MineShafts", "NaturalPatches", "NetherClumpFoliage", "NetherOreNests", "OreNests", "OrePockets", "OverworldClumpFlowers", "PreSimulator", "Ravines", "RoughRavines", 
                     {
                         Title = "SinglePieceStructures",
                         Value = "SinglePieceStructures",
-                        PossibleArguments = cFile:GetFolderContents("Prefabs/SinglePieceStructures")
+                        PossibleArguments = GetFilesWithoutExtensions("Prefabs/SinglePieceStructures")
                     },
-                    -- "SinglePieceStructures",
+                    {
+                        Title = "PieceStructures",
+                        Value = "PieceStructures",
+                        PossibleArguments = GetFilesWithoutExtensions("Prefabs/PieceStructures")
+                    },
                      "SoulsandRims", "Snow", "SprinkleFoliage", "TallGrass", "Trees", "Villages", "Vines", "WaterLakes", "WaterSprings", "WormNestCaves", 
                 },
                 Condition = ComposableTarget
-            }
+            },
+            {
+                Name = "VillageGridSize",
+                Type = "number",
+                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
+            },
+            {
+                Name = "VillageMaxOffset",
+                Type = "number",
+                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
+            },
+            {
+                Name = "VillageMaxDepth",
+                Type = "number",
+                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
+            },
+            {
+                Name = "VillageMaxSize",
+                Type = "number",
+                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
+            },
+            {
+                Name = "VillageMinDensity",
+                Type = "number",
+                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
+            },
+            {
+                Name = "VillageMaxDensity",
+                Type = "number",
+                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
+            },
+            {
+                Name = "VillagePrefabs",
+                Type = "multi",
+                SubOptions = GetFilesWithoutExtensions("Prefabs/Villages"),
+                Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")
+            },
         }
     }
 }

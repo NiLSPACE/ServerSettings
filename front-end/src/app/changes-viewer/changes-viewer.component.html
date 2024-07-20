@@ -11,7 +11,9 @@
                 <strong>{{group.key}} </strong>
 
                 <div *ngFor="let change of group.value">
-                    {{change.target}} {{change.option.Name}}: {{formatValue(change.option, change.option.OriginalValue)}} → {{formatValue(change.option, change.newValue)}}
+                    <span style="font-style:italic">
+                        {{change.option.Name}}
+                    </span>: {{formatValue(change.option, change.option.OriginalValue)}} → {{formatValue(change.option, change.newValue)}}
                     
                 </div>
             </ng-container>

@@ -1,23 +1,46 @@
-<div *ngIf="!isExpanded" (click)="isExpanded = true" >
-
-    <span *ngFor="let option of preview; let first=first"><ng-container *ngIf="!first">, </ng-container>{{option}}</span> {{formatPreviewText()}}
+<div class="preview" *ngIf="!isExpanded" (click)="isExpanded = true" >
+    <span *ngFor="let option of preview; let first=first"><ng-container *ngIf="!first">, </ng-container>{{option}}</span><span> {{formatPreviewText()}}</span>
 </div>
 <div cdkDropListGroup *ngIf="isExpanded" class="selector">
     <div class="selected-values">
         <h3>Selected</h3>
-        <!-- [cdkDropListData]="selectedValues" -->
         <div cdkDropList
             #selectedValuesList="cdkDropList"
             (cdkDropListDropped)="drop($event)">
             @for (option of selectedValues; track option) {
-                <div cdkDrag>{{formatTitle(option)}} <ng-container *ngIf="hasArguments(option)">🔧</ng-container></div>
+                <ng-container *ngIf="hasArguments(option); else noArguments" >
+                    <dialog  #argumentsModal cdkDropListGroup>
+                        <div class="arguments">
+                            <strong>Selected Arguments</strong>
+                            <strong>Possible Arguments</strong>
+                            <div cdkDropList #selectedArgumentsList="cdkDropList" (cdkDropListDropped)="dropArguments(option, $event)">
+                                @for (arg of option.optionArguments; track arg) {
+                                    <div cdkDrag>
+                                        {{arg}}
+                                    </div>
+                                }
+                            </div>
+                            <div cdkDropList #possibleArgumentsList="cdkDropList" (cdkDropListDropped)="dropArguments(option, $event, true)">
+                                @for (arg of getPossibleArguments(option); track arg) {
+                                    <div cdkDrag>
+                                        {{arg}}
+                                    </div>
+                                }
+                            </div>
+                            <button (click)="argumentsModal.close()">Accept</button>
+                        </div> 
+                    </dialog>
+                    <div cdkDrag>{{formatTitle(option)}} <span class="edit-args" (click)="argumentsModal.show()" >🔧</span></div>
+                </ng-container>
+                <ng-template #noArguments>
+                    <div cdkDrag>{{formatTitle(option)}}</div>
+                </ng-template>
             }
         </div>
     </div>
-    <div class="possible-values">
+    <div>
         <h3>Possible</h3>
-        <!-- [cdkDropListData]="possibleValues" -->
-        <div cdkDropList
+        <div class="possible-values" cdkDropList
         [cdkDropListConnectedTo]="selectedValuesList"
         (cdkDropListDropped)="drop($event, true)">
             @for (option of possibleValues; track option) {
@@ -25,4 +48,5 @@
             }
         </div>
     </div>
+    <button class="close-button" (click)="isExpanded = false">Close</button>
 </div>

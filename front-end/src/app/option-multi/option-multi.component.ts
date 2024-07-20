@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ɵsetCurrentInjector } from '@angular/core';
 import { Option, SubOption } from '../models/available-settings';
 
 class SelectedOption
@@ -29,8 +29,11 @@ export class OptionMultiComponent {
   @Input() public set option(option: Option)
   {
     this._option = option;
-    this.selectedValues = this._option.CurrentValue.split(',').map(x => new SelectedOption(x))
-    console.log(this.selectedValues)
+    this.selectedValues = this._option.CurrentValue
+    .split(',')
+    .map(x => x.trim())
+    .filter(x => x != '')
+    .map(x => new SelectedOption(x))
   }
 
   @Output() change = new EventEmitter<string>();
@@ -72,16 +75,20 @@ export class OptionMultiComponent {
     return optionVal.toLowerCase() == value.toLowerCase();
   }
 
-  hasArguments(selectedOption: SelectedOption)
+  getPossibleArguments(selectedOption: SelectedOption)
   {
-    // let [finisherName, args] = name.split(':').map(x => x.trim())
     let subOption = this._option.SubOptions.find(x => this.optionEquals(selectedOption.optionName, x));
     if (typeof subOption == 'string')
     {
-      return false
+      return []
     }
     subOption = subOption as SubOption
-    return (subOption.PossibleArguments?.length || 0) > 0
+    return (subOption.PossibleArguments || [])
+  }
+
+  hasArguments(selectedOption: SelectedOption)
+  {
+    return this.getPossibleArguments(selectedOption).length > 0
   }
 
   formatOutputOption(selectedOption: SelectedOption)
@@ -100,7 +107,11 @@ export class OptionMultiComponent {
   }
   drop(event: any, remove: boolean = false) {
     if (remove) {
-      this.selectedValues.splice(event.previousIndex, 1);
+      if (event.previousContainer !== event.container)
+      {
+        this.selectedValues.splice(event.previousIndex, 1);
+        this.updateCurrentValue();
+      }
       return
     }
     if (event.previousContainer === event.container) {
@@ -110,7 +121,36 @@ export class OptionMultiComponent {
       let item = this.possibleValues[event.previousIndex];
       this.selectedValues.splice(event.currentIndex, 0, new SelectedOption(this.formatSubOption(item)));
     }
-    this.change.emit(this.formatOutput())
+    this.updateCurrentValue();
+  }
+
+  updateCurrentValue()
+  {
+    let currentValue = this.formatOutput();
+    this._option.CurrentValue = currentValue
+    this.change.emit(currentValue)
+  }
+
+  dropArguments(option: SelectedOption, event:any, remove: boolean = false)
+  {
+    if (remove)
+    {
+      if (event.previousContainer !== event.container)
+      {
+        option.optionArguments.splice(event.previousIndex, 1);
+        this.updateCurrentValue();
+      }
+      return;
+    }
+    if (event.previousContainer === event.container) {
+      this.array_move(option.optionArguments, event.previousIndex, event.currentIndex);
+    }
+    else{
+      let possibleArguments = this.getPossibleArguments(option);
+      let item = possibleArguments[event.previousIndex];
+      option.optionArguments.splice(event.currentIndex, 0, item);
+    }
+    this.updateCurrentValue();
   }
 
   array_move(arr: any[], old_index: number, new_index: number) {

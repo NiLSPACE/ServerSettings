@@ -20,6 +20,9 @@ end
 
 function LinkEndpoints(a_Content)
 	return a_Content
+	:gsub('src="main.js"', 'src="?endpoint=file&file=main.js"')
+	:gsub('src="polyfills.js"', 'src="?endpoint=file&file=polyfills.js"')
+	:gsub('href="styles.css"', 'href="?endpoint=file&file=styles.css"')
 	:gsub('src="main%-(%w-)%.js"', 'src="?endpoint=file&file=main-%1.js"')
 	:gsub('src="polyfills%-(%w-)%.js"', 'src="?endpoint=file&file=polyfills-%1.js"')
 	:gsub('href="styles%-(%w-)%.css"', 'href="?endpoint=file&file=styles-%1.css"')
@@ -35,6 +38,9 @@ local g_Files = {
 	["polyfills%-(%w+)%.js"] = {path = CreatePath(cPluginManager:GetCurrentPlugin():GetLocalFolder(), "lib", "polyfills-%1.js"), mime = "application/javascript" },
 	["main%-(%w+)%.js"] = {path = CreatePath(cPluginManager:GetCurrentPlugin():GetLocalFolder(), "lib", "main-%1.js"), mime = "application/javascript" },
 	["styles%-(%w+)%.css"] = {path = CreatePath(cPluginManager:GetCurrentPlugin():GetLocalFolder(), "lib", "styles-%1.css"), mime = "text/css" },
+	["polyfills.js"] = {path = CreatePath(cPluginManager:GetCurrentPlugin():GetLocalFolder(), "lib", "polyfills.js"), mime = "application/javascript" },
+	["main.js"] = {path = CreatePath(cPluginManager:GetCurrentPlugin():GetLocalFolder(), "lib", "main.js"), mime = "application/javascript" },
+	["styles.css"] = {path = CreatePath(cPluginManager:GetCurrentPlugin():GetLocalFolder(), "lib", "styles.css"), mime = "text/css" },
 }
 
 

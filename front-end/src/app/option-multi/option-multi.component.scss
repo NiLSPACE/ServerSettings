@@ -1,12 +1,61 @@
+:host {
+    width:100%;
+}
+
 .selector
 {
     display:grid;
     grid-template-columns: repeat(2, auto);
-    // flex-direction: row;
 }
 
-.selector > div
+.selector > div > div
 {
-    max-height: 300px;
+    min-height: 200px;
     overflow-y: scroll;
+}
+
+dialog
+{
+    --width: 300px;
+    width:var(--width);
+    left: calc(100vw / 2 - var(--width) / 2)
+}
+div.arguments
+{
+    display:grid;
+    grid-template-columns: auto auto;
+}
+
+.cdk-drag
+{
+    cursor: grab;
+}
+
+.cdk-drag:nth-of-type(even)
+{
+    background-color: #fff;
+}
+.cdk-drag:nth-of-type(odd)
+{
+    background-color: #f4f7f6;
+}
+
+
+.edit-args, .preview {
+    cursor: pointer;
+}
+
+.preview {
+    background-color: white;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 6px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+
+.close-button {
+    grid-column: 1 / 3;
 }

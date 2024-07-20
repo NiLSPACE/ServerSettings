@@ -1,14 +1,16 @@
 
-<table>
+<div class="main-grid">
     <ng-container *ngFor="let category of settings.Categories">
-        <tr class="header">
-            <th colspan="2"><h3>{{category.CategoryName}}</h3></th>
-        </tr>
-        <tr *ngFor="let option of category.Options">
+        
+        <div class="category-name">
+            {{category.CategoryName}}
+        </div>
+        <div class="filler"></div>
+        <ng-container *ngFor="let option of category.Options">
             <ng-container *ngIf="conditionsMet(option)">
-                <td>{{option.Name}}</td>
-
-                <td>
+                <div class="sub-header">{{option.Name}}</div>
+                
+                <div>
                     <input *ngIf="option.Type == 'bool'"   (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" type="checkbox" [checked]="option.CurrentValue == '1'" (change)="option.CurrentValue = getValue($event)">
                     <input *ngIf="option.Type == 'string'" (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" type="text" [(ngModel)]="option.CurrentValue">
                     <input *ngIf="option.Type == 'number'" (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" type="number" [(ngModel)]="option.CurrentValue" >
@@ -16,10 +18,9 @@
                         <option *ngFor="let subOption of option.SubOptions" [value]="formatSubOptionTitle(subOption)">{{formatSubOptionTitle(subOption)}}</option>
                     </select>
                     <app-option-multi *ngIf="option.Type == 'multi'" (change)="changeManager.addChange(settings, category.CategoryName, option, $event)" [option]="option"></app-option-multi>
-                </td>
+                </div>
             </ng-container>
-        </tr>
-
+        </ng-container>
     </ng-container>
-</table>
+</div>
  
