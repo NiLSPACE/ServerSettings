@@ -1,4 +1,5 @@
 <div class="preview" *ngIf="!isExpanded" (click)="isExpanded = true" >
+    <span *ngIf="preview.length == 0">No options selected.</span>
     <span *ngFor="let option of preview; let first=first"><ng-container *ngIf="!first">, </ng-container>{{option}}</span><span> {{formatPreviewText()}}</span>
 </div>
 <div cdkDropListGroup *ngIf="isExpanded" class="selector">
