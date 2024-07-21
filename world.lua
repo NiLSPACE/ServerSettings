@@ -325,6 +325,11 @@ g_WorldSettings =
             { Name = "RoughRavinesMinCeilingHeightEdge",   Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
             { Name = "RoughRavinesMaxCeilingHeightCenter", Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
             { Name = "RoughRavinesMinCeilingHeightCenter", Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "RoughRavines") },
+
+            { Name = "PreSimulator",              Type = "header", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "PreSimulator") },
+            { Name = "PreSimulatorFallingBlocks", Type = "bool",   Condition = CreateCondition("Generator", "Finishers", Method.Includes, "PreSimulator") },
+            { Name = "PreSimulatorWater",         Type = "bool",   Condition = CreateCondition("Generator", "Finishers", Method.Includes, "PreSimulator") },
+            { Name = "PreSimulatorLava",          Type = "bool",   Condition = CreateCondition("Generator", "Finishers", Method.Includes, "PreSimulator") },
         }
     }
 }
