@@ -1,5 +1,7 @@
+<button *ngIf="changeManager.currentStatus != Status.Saved" [disabled]="changeManager.isSaving || changeManager.changes.length == 0" (click)="changeManager.applyChanges()">Apply</button>
+<button *ngIf="changeManager.currentStatus == Status.Saved" (click)="changeManager.restart()">Restart</button>
 <div *ngIf="changeManager.changes" class="main">
-    <div class="header-bar" (click)="switchIsExpanded()" [class.border-bottom]="isExpanded && changeManager.changes.length > 0">
+    <div class="header-bar" (click)="switchIsExpanded()" [class.is-expanded]="isExpanded" [class.border-bottom]="isExpanded && changeManager.changes.length > 0">
         <span>{{changeManager.changes.length}} change<ng-container *ngIf="changeManager.changes.length != 1">s</ng-container></span>
         <span *ngIf="isExpanded">▲</span>
         <span *ngIf="!isExpanded">▼</span>

@@ -1,28 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Option, Settings } from './models/available-settings';
+import { SettingChange } from "./models/setting-change"
+import { ApiManagerService } from './api-manager.service';
+import { Status } from './models/current-status';
 
-interface SettingChange
-{
-  worldName: string | null,
-  categoryName: string,
-  option: Option,
-  newValue: string,
-  // oldValue: string,
 
-}
+
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChangesManagerService {
-  changes: SettingChange[] = []
-  constructor() { }
+  private _currentStatus: Status = Status.Editing;
+  public get currentStatus() {return this._currentStatus;}
+  public changes: SettingChange[] = []
+  public isSaving: boolean = false;
+  constructor(private apiManager: ApiManagerService) { }
 
   addChange(source: Settings, categoryName: string, option: Option, newValue: string)
   {
-    source.WorldName
-    console.log(newValue)
     let existingChange = this.changes.find(x => x.worldName == source.WorldName && x.option.Name == option.Name && x.categoryName == categoryName)
     if (existingChange)
     {
@@ -39,6 +36,7 @@ export class ChangesManagerService {
     {
       this.changes.push({worldName: source.WorldName, categoryName, option, newValue})
     }
+    this._currentStatus = Status.Editing;
   }
 
   removeChange(change: SettingChange)
@@ -48,5 +46,23 @@ export class ChangesManagerService {
       return;
     }
     this.changes.splice(index, 1);
+  }
+
+  async applyChanges() {
+    try {
+      this.isSaving = true;
+      await this.apiManager.sendChanges(this.changes);
+      this._currentStatus = Status.Saved
+      this.changes = []
+    }
+    finally
+    {
+      this.isSaving = false;
+    }
+  }
+  
+  async restart() {
+    await this.apiManager.restart();
+    this._currentStatus = Status.Editing;
   }
 }

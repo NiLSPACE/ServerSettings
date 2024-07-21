@@ -2,15 +2,19 @@ import { Component } from '@angular/core';
 import { ChangesManagerService } from '../changes-manager.service';
 import { Option } from '../models/available-settings';
 import {diffWords} from "diff"
+import { Status } from '../models/current-status';
+import { ApiManagerService } from '../api-manager.service';
+
 @Component({
   selector: 'app-changes-viewer',
   templateUrl: './changes-viewer.component.html',
   styleUrl: './changes-viewer.component.scss'
 })
 export class ChangesViewerComponent {
+  public Status = Status;
   public diff = diffWords;
   public isExpanded: boolean = false
-  constructor(public changeManager: ChangesManagerService)
+  constructor(public changeManager: ChangesManagerService, public apiManager: ApiManagerService)
   {}
 
   switchIsExpanded()

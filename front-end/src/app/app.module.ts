@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { SettingsViewerComponent } from './settings-viewer/settings-viewer.component';
@@ -17,8 +16,8 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-// import {DragDropModule} from '@angular/cdk/drag-drop';
-import {DragDropModule} from '@angular/cdk/drag-drop'; 
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { RestartingSpinnerComponent } from './restarting-spinner/restarting-spinner.component'; 
 
 @NgModule({
   declarations: [
@@ -28,10 +27,10 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     ChangesViewerComponent,
     IfNullPipe,
     OptionMultiComponent,
+    RestartingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     FormsModule,
     DragDropModule,
     CdkDropListGroup, CdkDropList, CdkDrag

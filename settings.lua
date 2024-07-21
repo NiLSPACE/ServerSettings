@@ -64,7 +64,7 @@ g_ServerSettingsOptions =
                 Description = "The port on which the server runs"
             },
             {
-                Name = "Default Viewdistance",
+                Name = "DefaultViewDistance",
                 Type = "number",
                 Description = "The radius of chunks a player can see around them."
             },

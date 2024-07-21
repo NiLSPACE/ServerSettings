@@ -14,7 +14,6 @@
     // This code is meant to be used inside an iframe
     // so ajax calls automatically go to the layout-less endpoints.
     const resizeObserver = new ResizeObserver(entries => {
-      console.log("RESIIZE", {height: document.body.scrollHeight });
       window.parent.postMessage({height: document.body.scrollHeight })
     }
     )

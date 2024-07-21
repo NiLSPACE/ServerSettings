@@ -334,6 +334,8 @@ g_WorldSettings =
                 },
                 Condition = ComposableTarget
             },
+            { Name = "NetherMaxThreshold", Type = "number", Condition = CreateCondition("Generator", "CompositionGen", Method.Equals, "Nether")},
+            
 --------------------------------------------------------------------------------------
 ------------------------------------Finishers-----------------------------------------
 --------------------------------------------------------------------------------------
@@ -357,6 +359,8 @@ g_WorldSettings =
                 },
                 Condition = ComposableTarget
             },
+            { Name = "BottomLavaLevel",           Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "BottomLava")},
+
             { Name = 'Villages',                  Type = 'header', Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")},
             { Name = "VillageGridSize",           Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")},
             { Name = "VillageMaxOffset",          Type = "number", Condition = CreateCondition("Generator", "Finishers", Method.Includes, "Village")},
