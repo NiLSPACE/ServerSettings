@@ -24,6 +24,20 @@ end
 
 
 
+function GetAllMobNames()
+    local lastMobType = mtZombieVillager
+    local output = {}
+    for i = 0, lastMobType do
+        local mobName = cMonster:MobTypeToString(i)
+        if (mobName ~= "") then
+            table.insert(output, mobName)
+        end
+    end
+    return output
+end
+
+
+
 local ComposableTarget =
 {
     Target =
@@ -170,6 +184,25 @@ g_WorldSettings =
                 Name = "EndWorldName",
                 Type = "options",
                 SubOptions = CollectWorldNames()
+            }
+        }
+    },
+    {
+        CategoryName = "Monsters",
+        Options =
+        {
+            {
+                Name = "VillagersShouldHarvestCrops",
+                Type = "bool",
+            },
+            {
+                Name = "AnimalsOn",
+                Type = "bool",
+            },
+            {
+                Name = "Types",
+                Type = "multi",
+                SubOptions = GetAllMobNames()
             }
         }
     },
