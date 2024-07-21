@@ -188,6 +188,44 @@ g_WorldSettings =
         }
     },
     {
+        CategoryName = "Mechanics",
+        Options =
+        {
+            {
+                Name = "CommandBlocksEnabled",
+                Type = "bool",
+            },
+            {
+                Name = "PVPEnabled",
+                Type = "bool",
+            },
+            {
+                Name = "FarmlandTramplingEnabled",
+                Type = "bool",
+            },
+            {
+                Name = "UseChatPrefixes",
+                Type = "bool",
+            },
+            {
+                Name = "MinNetherPortalWidth",
+                Type = "number",
+            },
+            {
+                Name = "MaxNetherPortalWidth",
+                Type = "number",
+            },
+            {
+                Name = "MinNetherPortalHeight",
+                Type = "number",
+            },
+            {
+                Name = "MaxNetherPortalHeight",
+                Type = "number",
+            },
+        }
+    },
+    {
         CategoryName = "Monsters",
         Options =
         {
