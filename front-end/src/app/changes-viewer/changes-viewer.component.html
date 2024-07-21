@@ -13,7 +13,7 @@
                 <div *ngFor="let change of group.value">
                     <span style="font-style:italic">
                         {{change.option.Name}}
-                    </span>: {{formatValue(change.option, change.option.OriginalValue)}} → {{formatValue(change.option, change.newValue)}}
+                    </span>: <span *ngFor="let modification of diff(change.option.OriginalValue, change.newValue)" [class.addition]="modification.added" [class.deletion]="modification.removed">{{modification.value}}</span>
                     
                 </div>
             </ng-container>
