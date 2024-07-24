@@ -23,6 +23,7 @@ export interface Option
     Type: string,
     Description: string,
     CurrentValue: string,
+    UploadUrl: string,
     OriginalValue: string,
     Condition: Condition,
     SubOptions: (string | SubOption)[]

@@ -1,17 +1,6 @@
-<ng-container *ngIf="!apiManager.isRestarting; else restarting">
-  <app-changes-viewer></app-changes-viewer>
-  
-  <div class="settings-selector">
-    <div (click)="selectedSettings = apiManager.serverSettings">Server Settings</div>
-    <ng-container *ngFor="let world of apiManager.worlds">
-      | 
-      <div (click)="selectedSettings = world">{{world.WorldName}}</div>
-    </ng-container>
-  </div>
-  <app-settings-viewer *ngIf="selectedSettings != null" [settings]="selectedSettings">
-    
-  </app-settings-viewer>
+<ng-container *ngIf="!apiManager.isRestarting && !isInitializing; else restarting">
+  <app-page-settings></app-page-settings>
 </ng-container>
 <ng-template #restarting>
-  <app-restarting-spinner></app-restarting-spinner>
+  <app-spinner [isInitializing]="isInitializing"></app-spinner>
 </ng-template>

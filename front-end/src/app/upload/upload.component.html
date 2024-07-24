@@ -1,0 +1,3 @@
+<input (change)="onZipSelected($event)" type="file">
+<span class="error" *ngIf="errorMessage">{{errorMessage}}</span>
+<span class="success" *ngIf="successMessage">{{successMessage}}</span>

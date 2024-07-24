@@ -10,19 +10,18 @@
 }
 
 @keyframes rotation {
-0% {
-    transform: rotate(0deg);
-}
-100% {
-    transform: rotate(360deg);
-}
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 } 
 
 
 
 :host {
     width: 100vw;
-    // height:100vh;
     display:flex;
     justify-content: center;
     min-height: 400px;

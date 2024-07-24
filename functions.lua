@@ -35,3 +35,28 @@ function MergeSettingsWithIni(a_IniFilePath, a_MergeObject)
     end
     return output
 end
+
+
+
+--- Returns a list of all the keys in the provided object.
+function Keys(a_Obj)
+	local outp = {}
+	for key, _ in pairs(a_Obj) do
+		table.insert(outp, key);
+	end
+	return outp
+end
+
+
+
+--- Creates a copy of the provided table and 
+-- adds the additional provided parameter at the end
+-- This function was created because {unpack(t), arg} doesn't work
+function pack(a_Table, a_NewArg)
+	local copy = {unpack(a_Table)}
+	table.insert(copy, a_NewArg)
+	return copy;
+end
+
+
+

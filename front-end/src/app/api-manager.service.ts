@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, lastValueFrom } from 'rxjs';
-// import {Key } from "./models/settings";
-import { Category, Settings } from './models/available-settings';
+import { Category, Settings, Option } from './models/available-settings';
 import { SettingChange } from './models/setting-change';
+import { StructuredZipFile } from './models/zip';
 
 @Injectable({
   providedIn: 'root'
@@ -77,4 +77,15 @@ export class ApiManagerService {
     await this.wait;
     this.isRestarting = false;
   }
+
+
+  async uploadPlugin(url: string, filename: string, zip: StructuredZipFile): Promise<Option> {
+    let option = await this.sendRequest<Option | string>(url, "post", "zipname=" + encodeURIComponent(filename) + "&files=" + encodeURIComponent(JSON.stringify(zip)), {'Content-Type': 'application/x-www-form-urlencoded'} )
+    if (typeof option == "string")
+    {
+      throw Error(option);
+    }
+    return option;
+  }
+  
 }

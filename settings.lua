@@ -3,6 +3,19 @@
 
 
 
+function CollectPlugins()
+    local output = {}
+	cPluginManager:Get():ForEachPlugin(function(a_Plugin)
+		table.insert(output, {
+            Name =  a_Plugin:GetFolderName(),
+            Type = "bool"
+		 })
+	end);
+    return output;
+end
+
+
+
 
 
 g_ServerSettingsOptions =
@@ -99,22 +112,18 @@ g_ServerSettingsOptions =
                 Description = "The message send to players when they are disconnected from the server due to a shutdown or restart."
             },
         }
-            
-            -- {
-            --     Name = "ConditionTest",
-            --     Type = "number",
-            --     Description = "The amount of players allowed",
-            --     Condition =
-            --     {
-            --         Target =
-            --         {
-            --             CategoryName = "Server",
-            --             OptionName = "MaxPlayers"
-            --         },
-            --         ExpectedValue = "1",
-            --         Method = "equals"
-            --     }
-            -- }
+    },
+    {
+        CategoryName = "Plugins",
+        Options = 
+        {
+            {
+                Name = "Upload",
+                Type = "upload",
+                UploadUrl = "./?endpoint=upload_plugin"
+            },
+            unpack(CollectPlugins())
+        }
     },
     {
         CategoryName = "MojangAPI",

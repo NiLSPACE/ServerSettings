@@ -1,0 +1,12 @@
+.settings-selector
+{
+    display: flex;
+    justify-content: start;
+    gap: 8px;
+    overflow-x: scroll;
+
+    > div {
+        text-decoration: underline;
+    }
+}
+
