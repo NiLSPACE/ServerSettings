@@ -17,7 +17,9 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { RestartingSpinnerComponent } from './restarting-spinner/restarting-spinner.component'; 
+import { SpinnerComponent } from './spinner/spinner.component';
+import { PageSettingsComponent } from './page-settings/page-settings.component';
+import { UploadComponent } from './upload/upload.component'; 
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { RestartingSpinnerComponent } from './restarting-spinner/restarting-spin
     ChangesViewerComponent,
     IfNullPipe,
     OptionMultiComponent,
-    RestartingSpinnerComponent,
+    SpinnerComponent,
+    PageSettingsComponent,
+    UploadComponent,
   ],
   imports: [
     BrowserModule,

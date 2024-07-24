@@ -3,6 +3,8 @@ import { ApiManagerService } from './api-manager.service';
 import { ChangesManagerService } from './changes-manager.service';
 import { Settings } from './models/available-settings';
 
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,12 +12,13 @@ import { Settings } from './models/available-settings';
 })
 export class AppComponent implements OnInit {
   title = 'front-end';
-  public selectedSettings!: Settings;
+  isInitializing: boolean = true;
+  
   constructor(public apiManager: ApiManagerService)
   {
   }
   async ngOnInit(): Promise<void> {
     await this.apiManager.wait
-    this.selectedSettings = this.apiManager.serverSettings;
+    this.isInitializing = false;
   }
 }

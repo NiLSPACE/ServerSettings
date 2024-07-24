@@ -125,6 +125,51 @@ end
 
 
 
+--- Endpoint that allows users to upload new plugins.
+function HandleEndpointUploadPlugin(a_Request)
+	local json = a_Request.PostParams["files"];
+	local zipname = a_Request.PostParams["zipname"];
+	local decoded = cJson:Parse(json);
+	local keys = Keys(decoded)
+	local pluginName = zipname
+	local hasRootFolder = #keys == 1 and not keys[1]:lower():match("%.lua$")
+	if (hasRootFolder) then
+		pluginName = keys[1]
+	end
+	local path = { "Plugins", pluginName }
+	local function process(a_Path, a_Obj)
+		cFile:CreateFolder(table.concat(a_Path, cFile:GetPathSeparator()))
+		for k, v in pairs(a_Obj) do
+			if (type(v) == "table") then
+				-- a Folder
+				process(pack(a_Path, k), v)
+			else
+				-- A file
+				local content = Base64Decode(v);
+				local path = a_Path
+				local f = io.open(table.concat(pack(a_Path, k), cFile:GetPathSeparator()), "wb")
+				f:write(content);
+				f:close();
+			end
+		end
+	end
+
+	if (cFile:IsFolder(table.concat(path, cFile:GetPathSeparator()))) then
+		return [["The plugin \"]] .. pluginName .. [[\" already exists"]], "application/json"
+	end
+	process(path, hasRootFolder and decoded[keys[1]] or decoded)
+
+	cPluginManager:Get():RefreshPluginList()
+
+	return cJson:Serialize({
+		Name =  pluginName,
+		Type = "bool"
+	 }), "application/json"
+end
+
+
+
+
 
 
 function HandleEndpointGetWorlds(a_Request)
@@ -145,12 +190,6 @@ end
 
 
 
-function HandleEndpointPossibleServerSettings(a_Request)
-	return cJson:Serialize(g_ServerSettingsOptions), "application/json"
-end
-
-
-
 
 
 --- All supported endpoints.
@@ -160,7 +199,8 @@ local g_Endpoints = {
 	world_list = HandleEndpointGetWorlds,
 	apply_changes = HandleEndpointApplyChanges,
 	ping = HandleEndpointPing,
-	restart_server = HandleEndpointRestartServer
+	restart_server = HandleEndpointRestartServer,
+	upload_plugin = HandleEndpointUploadPlugin
 }
 
 
