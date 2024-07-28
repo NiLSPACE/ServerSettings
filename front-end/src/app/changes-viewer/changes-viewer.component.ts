@@ -11,6 +11,7 @@ import { ApiManagerService } from '../api-manager.service';
   styleUrl: './changes-viewer.component.scss'
 })
 export class ChangesViewerComponent {
+  JSON = JSON
   public Status = Status;
   public diff = diffWords;
   public isExpanded: boolean = false

@@ -7,6 +7,9 @@ export interface Settings
 export interface Category
 {
     CategoryName: string,
+    IsMultiKeyCategory: boolean,
+    RequiredKey: string,
+    KeyName: string,
     Options: Option[]
 }
 
@@ -20,6 +23,7 @@ export interface SubOption
 export interface Option
 {
     Name: string,
+    Title: string | null,
     Type: string,
     Description: string,
     CurrentValue: string,

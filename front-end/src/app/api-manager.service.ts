@@ -27,7 +27,7 @@ export class ApiManagerService {
 
   async sendChanges(changes: SettingChange[]): Promise<void>
   {
-    let mapped = changes.map(x => ({target: x.worldName, category: x.categoryName, option: x.option.Name, value: x.newValue}))
+    let mapped = changes.map(x => ({target: x.worldName, category: x.category.CategoryName, option: x.option.Name, value: x.newValue}))
     let result = await this.sendRequest("./?endpoint=apply_changes", "post","changes=" + encodeURIComponent(JSON.stringify(mapped)), {'Content-Type': 'application/x-www-form-urlencoded'})
     if (result != "OK")
     {

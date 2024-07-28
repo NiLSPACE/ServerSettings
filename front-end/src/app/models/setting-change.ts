@@ -1,9 +1,9 @@
-import {Option} from "./available-settings"
+import {Category, Option} from "./available-settings"
 
 export interface SettingChange
 {
   worldName: string | null,
-  categoryName: string,
+  category: Category,
   option: Option,
   newValue: string,
 }

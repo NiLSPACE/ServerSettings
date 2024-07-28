@@ -17,6 +17,67 @@ end
 
 
 
+function FillMultiKeyCategory(a_Ini, a_Category)
+    local ini = cIniFile()
+    if (not ini:ReadFile(a_Ini)) then
+        error("Could not find ini file")
+        return
+    end
+    local numValues = ini:GetNumValues(a_Category.CategoryName)
+    local keyId = ini:FindKey(a_Category.CategoryName)
+    local options = {}
+    for i = 0, numValues - 1 do
+        local valueName = ini:GetValueName(a_Category.CategoryName, i)
+        local value = ini:GetValue(keyId, i)
+        local optionName, title;
+        if (valueName == a_Category.RequiredKey) then
+            optionName = a_Category.RequiredKey
+            title = optionName
+        else
+            optionName = valueName .. "&" .. i
+            title = valueName
+        end
+        table.insert(options, {
+            Name = optionName,
+            Title = title,
+            CurrentValue = value,
+            OriginalValue = value,
+            Type = "string"
+        })
+    end
+    a_Category.Options = options
+    return a_Category
+end
+
+
+
+
+function CollectWorlds()
+    local output = {}
+    local numNonRequiredKeys = 0;
+    local function work(a_World)
+        local key
+        if (a_World == cRoot:Get():GetDefaultWorld()) then
+            key = "DefaultWorld"
+        else
+            key = "World-" .. numNonRequiredKeys + 1
+            numNonRequiredKeys = numNonRequiredKeys + 1
+        end
+        table.insert(output, {
+            Name = key,
+            Title = a_World == cRoot:Get():GetDefaultWorld() and "DefaultWorld" or "World",
+            Type = "string",
+            CurrentValue = a_World:GetName(),
+            OriginalValue = a_World:GetName()
+        })
+    end
+    cRoot:Get():ForEachWorld(work)
+    return output
+end
+
+
+
+
 
 g_ServerSettingsOptions =
 {
@@ -189,10 +250,11 @@ g_ServerSettingsOptions =
             }
         }
     },
-    -- {
-    --     CategoryName = "Worlds",
-    --     IsMultiKeyCategory = True,
-    --     RequiredKey = "DefaultWorld",
-    --     KeyName = "World"
-    -- }
+    FillMultiKeyCategory("settings.ini", {
+        CategoryName = "Worlds",
+        IsMultiKeyCategory = true,
+        RequiredKey = "DefaultWorld",
+        KeyName = "World",
+        -- Options = CollectWorlds(),
+    })
 }

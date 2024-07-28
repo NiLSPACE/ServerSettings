@@ -12,19 +12,26 @@
                     <div class="option-header">{{option.Name}}</div><div></div>
                 </ng-container>
                 <ng-template #options>
-                    <div class="sub-header">{{option.Name}}</div>
+                    <div class="sub-header">{{option.Title || option.Name}}</div>
                     <div>
                         <app-upload *ngIf="option.Type == 'upload'" [option]="option" [category]="category"></app-upload>
-                        <input *ngIf="option.Type == 'bool'"   (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" type="checkbox" [checked]="option.CurrentValue == '1'" (change)="option.CurrentValue = getValue($event)">
-                        <input *ngIf="option.Type == 'string'" (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" type="text" [(ngModel)]="option.CurrentValue">
-                        <input *ngIf="option.Type == 'number'" (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" type="number" [(ngModel)]="option.CurrentValue" >
-                        <select *ngIf="option.Type == 'options'" (change)="changeManager.addChange(settings, category.CategoryName, option, getValue($event))" [(ngModel)]="option.CurrentValue">
+                        <input *ngIf="option.Type == 'bool'"   (change)="changeManager.addChange(settings, category, option, getValue($event))" type="checkbox" [checked]="option.CurrentValue == '1'" (change)="option.CurrentValue = getValue($event)">
+                        <input *ngIf="option.Type == 'string'" (change)="changeManager.addChange(settings, category, option, getValue($event))" type="text" [(ngModel)]="option.CurrentValue">
+                        <input *ngIf="option.Type == 'number'" (change)="changeManager.addChange(settings, category, option, getValue($event))" type="number" [(ngModel)]="option.CurrentValue" >
+                        <select *ngIf="option.Type == 'options'" (change)="changeManager.addChange(settings, category, option, getValue($event))" [(ngModel)]="option.CurrentValue">
                             <option *ngFor="let subOption of option.SubOptions" [value]="formatSubOptionTitle(subOption)">{{formatSubOptionTitle(subOption)}}</option>
                         </select>
-                        <app-option-multi *ngIf="option.Type == 'multi'" (change)="changeManager.addChange(settings, category.CategoryName, option, $event)" [option]="option"></app-option-multi>
+                        <app-option-multi *ngIf="option.Type == 'multi'" (change)="changeManager.addChange(settings, category, option, $event)" [option]="option"></app-option-multi>
                     </div>
                 </ng-template>
             </ng-container>
+        </ng-container>
+        <ng-container *ngIf="category.IsMultiKeyCategory">
+            <div></div>
+            <div>
+                <button (click)="addKey(category)">Add</button>
+            </div>
+
         </ng-container>
     </ng-container>
 </div>

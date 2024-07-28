@@ -69,4 +69,17 @@ export class SettingsViewerComponent {
       return (subOption as SubOption).Title
     }
   }
+
+  addKey(category:Category)
+  {
+    let option: Option = {
+      Title: category.KeyName,
+      Name: category.KeyName + "&NEW",
+      OriginalValue: '',
+      Type: 'string',
+    } as any
+    category.Options.push(
+      option
+    )
+  }
 }

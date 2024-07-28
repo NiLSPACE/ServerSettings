@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Option, Settings } from './models/available-settings';
+import { Category, Option, Settings } from './models/available-settings';
 import { SettingChange } from "./models/setting-change"
 import { ApiManagerService } from './api-manager.service';
 import { Status } from './models/current-status';
@@ -18,9 +18,9 @@ export class ChangesManagerService {
   public isSaving: boolean = false;
   constructor(private apiManager: ApiManagerService) { }
 
-  addChange(source: Settings, categoryName: string, option: Option, newValue: string)
+  addChange(source: Settings, category: Category, option: Option, newValue: string)
   {
-    let existingChange = this.changes.find(x => x.worldName == source.WorldName && x.option.Name == option.Name && x.categoryName == categoryName)
+    let existingChange = this.changes.find(x => x.worldName == source.WorldName && x.option.Name == option.Name && x.category.CategoryName == category.CategoryName)
     if (existingChange)
     {
       if (existingChange.option.OriginalValue == newValue)
@@ -34,7 +34,7 @@ export class ChangesManagerService {
     }
     else
     {
-      this.changes.push({worldName: source.WorldName, categoryName, option, newValue})
+      this.changes.push({worldName: source.WorldName, category, option, newValue})
     }
     this._currentStatus = Status.Editing;
   }

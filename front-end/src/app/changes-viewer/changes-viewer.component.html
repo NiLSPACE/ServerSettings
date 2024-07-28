@@ -9,7 +9,7 @@
     <ng-container *ngIf="isExpanded">
         <div *ngFor="let settingsGroup of changeManager.changes | groupBy: 'worldName'">
             <h3>{{(settingsGroup.key | ifNull: 'Server Settings')}} </h3>
-            <ng-container *ngFor="let group of settingsGroup.value | groupBy: 'categoryName'">
+            <ng-container *ngFor="let group of settingsGroup.value | groupBy: 'category':'CategoryName'">
                 <strong>{{group.key}} </strong>
 
                 <div *ngFor="let change of group.value">

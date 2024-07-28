@@ -99,7 +99,21 @@ function HandleEndpointApplyChanges(a_Request)
 
 	for idx, change in ipairs(decoded) do
 		local ini = GetIniFile(change.target)
-		ini:SetValue(change.category, change.option, change.value)
+		local category = FindInTable(change.target == nil and g_ServerSettingsOptions or g_WorldSettings, function(category) return category.CategoryName == change.category end)
+		if (category.IsMultiKeyCategory) then
+			if (category.RequiredKey == change.option) then
+				ini:SetValue(change.category, change.option, change.value)
+			else
+				local key, index = change.option:match("(%w+)%&(.+)")
+				if (index == "NEW") then
+					ini:AddValue(change.category, key, change.value)
+				else
+					ini:SetValue(ini:FindKey(change.category), tonumber(index), change.value)
+				end
+			end
+		else
+			ini:SetValue(change.category, change.option, change.value)
+		end
 	end
 
 	for _, iniPath in pairs(targets) do
