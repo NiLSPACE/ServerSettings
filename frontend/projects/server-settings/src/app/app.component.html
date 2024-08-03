@@ -1,0 +1,8 @@
+<app-changes-viewer></app-changes-viewer>
+
+<ng-container *ngIf="!apiManager.isRestarting && !isInitializing; else restarting">
+    <app-settings-viewer [settings]="apiManager.serverSettings"></app-settings-viewer>
+</ng-container>
+<ng-template #restarting>
+    <app-spinner [isInitializing]="isInitializing"></app-spinner>
+</ng-template>

@@ -17,12 +17,37 @@ end
 
 
 
+function FindInTable(a_Table, a_Callback)
+    for key, value in pairs(a_Table) do
+        if (a_Callback(value, key)) then
+            return value, key
+        end
+    end
+end
+
+
+
+
 function MergeSettingsWithIni(a_IniFilePath, a_MergeObject)
     local ini = cIniFile()
     ini:ReadFile(a_IniFilePath)
     local output = CloneTable(a_MergeObject)
     for ic, category in ipairs(output) do
         if (category.IsMultiKeyCategory) then
+            -- local numValues = ini:GetNumValues(category.CategoryName);
+            -- for i = 0, numValues - 1 do
+            --     local name = ini:GetValueName(category.CategoryName, i)
+            --     local option;
+            --     if (name == category.RequiredKey) then
+            --         -- option = FindInTable(category.Options, function(a_Option) return a_Option.Name == category.RequiredKey end)
+            --         -- Assume the first option is the required key
+            --         option = category.Options[1]
+            --     else
+            --         option = category.Options[2 + i]
+            --     end
+            --     option.OriginalValue = ini:GetValue(category.CategoryName, i)
+            --     option.CurrentValue = option.OriginalValue
+            -- end
             -- local numValues = 
         else
             for io, option in ipairs(category.Options) do

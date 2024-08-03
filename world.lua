@@ -308,6 +308,7 @@ g_WorldSettings =
                 SubOptions =
                 {
                     "Flat",
+                    "Classic",
                 },
 
                 Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "HeightMap")
@@ -318,6 +319,13 @@ g_WorldSettings =
                 Type = "number",
                 Condition = CreateCondition("Generator", "HeightGen", Method.Equals, "Flat")
             },
+
+            { Name = "ClassicHeightFreq1", Type = "number", Condition = CreateCondition("Generator", "HeightGen", Method.Equals, "Classic")},
+            { Name = "ClassicHeightFreq2", Type = "number", Condition = CreateCondition("Generator", "HeightGen", Method.Equals, "Classic")},
+            { Name = "ClassicHeightFreq3", Type = "number", Condition = CreateCondition("Generator", "HeightGen", Method.Equals, "Classic")},
+            { Name = "ClassicHeightAmp1",  Type = "number", Condition = CreateCondition("Generator", "HeightGen", Method.Equals, "Classic")},
+            { Name = "ClassicHeightAmp2",  Type = "number", Condition = CreateCondition("Generator", "HeightGen", Method.Equals, "Classic")},
+            { Name = "ClassicHeightAmp3",  Type = "number", Condition = CreateCondition("Generator", "HeightGen", Method.Equals, "Classic")},
 
 --------------------------------------------------------------------------------------
 ------------------------------Composition Gen-----------------------------------------
