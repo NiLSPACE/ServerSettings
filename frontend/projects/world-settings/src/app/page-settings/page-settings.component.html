@@ -1,0 +1,8 @@
+<app-changes-viewer></app-changes-viewer>
+    
+<div class="settings-selector">
+    Selected World: <select [(ngModel)]="selectedSettings">
+        <option *ngFor="let world of apiManager.worlds" [ngValue]="world">{{world.WorldName}}</option>
+    </select>
+</div>
+<app-settings-viewer *ngIf="selectedSettings != null" [settings]="selectedSettings"></app-settings-viewer>

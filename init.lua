@@ -11,7 +11,11 @@ function Initialize(a_Plugin)
 	a_Plugin:SetName(g_PluginInfo.Name)
 	a_Plugin:SetVersion(g_PluginInfo.Version)
 
-	a_Plugin:AddWebTab("Server Settings", HandleWebRequest)
+	InitEndpointsServer()
+	InitEndpointsWorld()
+	
+	a_Plugin:AddWebTab("Server Settings", HandleWebRequest_Server)
+	a_Plugin:AddWebTab("World Settings", HandleWebRequest_World)
 	
 	LOG("Initialized");
 	return true;
