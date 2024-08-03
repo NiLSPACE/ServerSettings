@@ -5,13 +5,20 @@
 .selector
 {
     display:grid;
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(2, 50%);
+}
+
+.selector > div
+{
+    display:flex;
+    flex-direction: column;
 }
 
 .selector > div > div
 {
     min-height: 200px;
     overflow-y: scroll;
+    height:100%;
 }
 
 dialog
@@ -55,7 +62,36 @@ div.arguments
     align-items: center;
 }
 
+.possible-values
+{
+    &.cdk-drop-list-receiving, &.cdk-drop-list-dragging {
+        :not(.delete-box) {
+            display:none;
+        }
+    }
+    .cdk-drag-placeholder
+    {
+        display:none;
+    }
+}
+
+
+.hide
+{
+    display:none;
+}
+
 
 .close-button {
     grid-column: 1 / 3;
+}
+
+
+.delete-box
+{
+    --num-items: 0;
+    height: calc(18.2px * var(--num-items));
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }

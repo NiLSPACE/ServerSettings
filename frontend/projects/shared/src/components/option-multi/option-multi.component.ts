@@ -26,6 +26,8 @@ class SelectedOption
 export class OptionMultiComponent {
   private _option!: Option;
   public selectedValues!: SelectedOption[];
+  public currentDraggingOption: SelectedOption | string | null = null;
+
   @Input() public set option(option: Option)
   {
     this._option = option;
@@ -111,20 +113,26 @@ export class OptionMultiComponent {
     .join(", ")
   }
   drop(event: any, remove: boolean = false) {
-    if (remove) {
-      if (event.previousContainer !== event.container)
-      {
-        this.selectedValues.splice(event.previousIndex, 1);
-        this.updateCurrentValue();
+    try {
+      if (remove) {
+        if (event.previousContainer !== event.container)
+        {
+          this.selectedValues.splice(event.previousIndex, 1);
+          this.updateCurrentValue();
+        }
+        return
       }
-      return
+      if (event.previousContainer === event.container) {
+        this.array_move(this.selectedValues, event.previousIndex, event.currentIndex);
+      } else {
+        // this event only gets called when dropped on the selectedValues list.
+        let item = this.currentDraggingOption as string
+        this.selectedValues.splice(event.currentIndex, 0, new SelectedOption(this.formatSubOption(item)));
+      }
     }
-    if (event.previousContainer === event.container) {
-      this.array_move(this.selectedValues, event.previousIndex, event.currentIndex);
-    } else {
-      // this event only gets called when dropped on the selectedValues list.
-      let item = this.possibleValues[event.previousIndex];
-      this.selectedValues.splice(event.currentIndex, 0, new SelectedOption(this.formatSubOption(item)));
+    finally
+    {
+      this.currentDraggingOption = null;
     }
     this.updateCurrentValue();
   }
@@ -167,5 +175,5 @@ export class OptionMultiComponent {
     }
     arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
     return arr; // for testing
-};
+  };
 }

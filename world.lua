@@ -260,6 +260,7 @@ g_WorldSettings =
 --------------------------------------------------------------------------------------
 ------------------------------Biome Gen-----------------------------------------
 --------------------------------------------------------------------------------------
+            { Name = "BiomeGen", Type = "header", Condition = ComposableTarget },
             {
                 Name = "BiomeGen",
                 Type = "options",
@@ -283,25 +284,101 @@ g_WorldSettings =
                 SubOptions = GetBiomeNames(),
                 Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "Constant")
             },
+            
+            { Name = "CheckerBoardBiomes",  Type = "multi",  Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "Checkerboard"), SubOptions = GetBiomeNames()},
+            { Name = "CheckerBoardSize",    Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "Checkerboard")},
+
+            { Name = "VoronoiCellSize",     Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "Voronoi")},
+            { Name = "VoronoiJitterSize",   Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "Voronoi")},
+            { Name = "VoronoiOddRowOffset", Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "Voronoi")},
+            { Name = "VoronoiBiomes",       Type = "multi",  Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "Voronoi"), SubOptions = GetBiomeNames()},
+            
+            { Name = "DistortedVoronoiCellSize",     Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "DistortedVoronoi")},
+            { Name = "DistortedVoronoiBiomes",       Type = "multi",  Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "DistortedVoronoi"), SubOptions = GetBiomeNames()},
+            
+            { Name = "MultiStepMapOceanCellSize",      Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "MultiStepMap")},
+            { Name = "MultiStepMapMushroomIslandSize", Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "MultiStepMap")},
+            { Name = "MultiStepMapRiverCellSize",      Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "MultiStepMap")},
+            { Name = "MultiStepMapRiverWidth",         Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "MultiStepMap")},
+            { Name = "MultiStepMapLandBiomeSize",      Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "MultiStepMap")},
+            
+            { Name = "TwoLevelLargeCellSize",       Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelSmallCellSize",       Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelDistortXOctave1Freq", Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelDistortXOctave1Amp",  Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelDistortXOctave2Freq", Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelDistortXOctave2Amp",  Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelDistortXOctave3Freq", Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelDistortXOctave3Amp",  Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelDistortZOctave1Freq", Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelDistortZOctave1Amp",  Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelDistortZOctave2Freq", Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelDistortZOctave2Amp",  Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelDistortZOctave3Freq", Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            { Name = "TwoLevelDistortZOctave3Amp",  Type = "number", Condition = CreateCondition("Generator", "BiomeGen", Method.Equals, "TwoLevel")},
+            
 --------------------------------------------------------------------------------------
 ------------------------------------Shape Gen-----------------------------------------
 --------------------------------------------------------------------------------------
+            { Name = "ShapeGen", Type = "header", Condition = ComposableTarget },
             {
                 Name = "ShapeGen",
                 Type = "options",
                 SubOptions =
                 {
                     "BiomalNoise3D",
+                    "Noise3D",
                     "HeightMap",
+                    "DistortedHeightmap",
+                    "TwoHeights",
                     "End",
                 },
 
                 Condition = ComposableTarget
             },
+            { Name = "SeaLevel",                       Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DFrequencyX",        Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DFrequencyY",        Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DFrequencyZ",        Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DBaseFrequencyX",    Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DBaseFrequencyZ",    Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DChoiceFrequencyX",  Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DChoiceFrequencyY",  Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DChoiceFrequencyZ",  Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DAirThreshold",      Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DNumChoiceOctaves",  Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DNumDensityOctaves", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DNumBaseOctaves",    Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
+            { Name = "BiomalNoise3DBaseAmplitude",     Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "BiomalNoise3D")},
 
+            { Name = "SeaLevel",                     Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "DistortedHeightmap")},
+            { Name = "DistortedHeightmapFrequencyX", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "DistortedHeightmap")},
+            { Name = "DistortedHeightmapFrequencyY", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "DistortedHeightmap")},
+            { Name = "DistortedHeightmapFrequencyZ", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "DistortedHeightmap")},
+            
+            { Name = "TwoHeightsFrequencyX", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "TwoHeights")},
+            { Name = "TwoHeightsFrequencyY", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "TwoHeights")},
+            { Name = "TwoHeightsFrequencyZ", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "TwoHeights")},
+            
+            { Name = "Noise3DHeightAmplification", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DMidPoint",            Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DFrequencyX",          Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DFrequencyY",          Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DFrequencyZ",          Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DBaseFrequencyX",      Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DBaseFrequencyZ",      Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DChoiceFrequencyX",    Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DChoiceFrequencyY",    Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DChoiceFrequencyZ",    Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DAirThreshold",        Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DNumChoiceOctaves",    Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DNumDensityOctaves",   Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DNumBaseOctaves",      Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
+            { Name = "Noise3DBaseAmplitude",       Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "Noise3D")},
 --------------------------------------------------------------------------------------
 ------------------------------------Height Gen-----------------------------------------
 --------------------------------------------------------------------------------------
+            { Name = "HeightGen", Type = "header", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "HeightMap")},
             {
                 Name = "HeightGen",
                 Type = "options",
@@ -310,7 +387,6 @@ g_WorldSettings =
                     "Flat",
                     "Classic",
                 },
-
                 Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "HeightMap")
             },
 
@@ -330,11 +406,13 @@ g_WorldSettings =
 --------------------------------------------------------------------------------------
 ------------------------------Composition Gen-----------------------------------------
 --------------------------------------------------------------------------------------
+            { Name = "CompositionGen", Type = "header", Condition = ComposableTarget },
             {
                 Name = "CompositionGen",
                 Type = "options",
                 SubOptions =
                 {
+                    "SameBlock",
                     "Biomal",
                     "Nether",
                     "End",
@@ -342,11 +420,13 @@ g_WorldSettings =
                 },
                 Condition = ComposableTarget
             },
+            { Name = "SameBlockType", Type = "number", Condition = CreateCondition("Generator", "CompositionGen", Method.Equals, "SameBlock")},
             { Name = "NetherMaxThreshold", Type = "number", Condition = CreateCondition("Generator", "CompositionGen", Method.Equals, "Nether")},
             
 --------------------------------------------------------------------------------------
 ------------------------------------Finishers-----------------------------------------
 --------------------------------------------------------------------------------------
+            { Name = "Finishers", Type = "header", Condition = ComposableTarget },
             {
                 Name = "Finishers",
                 Type = "multi",

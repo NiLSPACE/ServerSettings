@@ -30,22 +30,25 @@
                             <button (click)="argumentsModal.close()">Accept</button>
                         </div> 
                     </dialog>
-                    <div cdkDrag>{{formatTitle(option)}} <span class="edit-args" (click)="argumentsModal.show()" >🔧</span></div>
+                    <div cdkDrag (cdkDragStarted)="currentDraggingOption = option">{{formatTitle(option)}} <span class="edit-args" (click)="argumentsModal.show()" >🔧</span></div>
                 </ng-container>
                 <ng-template #noArguments>
-                    <div cdkDrag>{{formatTitle(option)}}</div>
+                    <div cdkDrag (cdkDragStarted)="currentDraggingOption = option">{{formatTitle(option)}}</div>
                 </ng-template>
             }
         </div>
     </div>
     <div>
-        <h3>Possible</h3>
+        <h3 *ngIf="currentDraggingOption == null">Possible</h3>
+        <h3 *ngIf="currentDraggingOption != null">Delete</h3>
         <div class="possible-values" cdkDropList
         [cdkDropListConnectedTo]="selectedValuesList"
         (cdkDropListDropped)="drop($event, true)">
-            @for (option of possibleValues; track option) {
-                <div cdkDrag>{{formatSubOption(option)}}</div>
-            }
+        @for (option of possibleValues; track option) {
+            <div cdkDrag (cdkDragStarted)="currentDraggingOption = option" [class.hide]="currentDraggingOption != null && currentDraggingOption != option" >{{formatSubOption(option)}}</div>
+        }
+            <div class="delete-box" *ngIf="currentDraggingOption != null" [style.--num-items]="possibleValues.length">Drop to remove</div>
+            <!-- [ngStyle]="{'visibility': isDragging ? 'hidden' : 'visible'}" -->
         </div>
     </div>
     <button class="close-button" (click)="isExpanded = false">Close</button>

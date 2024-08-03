@@ -34,7 +34,7 @@ export class SettingsViewerComponent {
       return true;
     }
     let category = this.settings.Categories.find(x => x.CategoryName == option.Condition.Target.CategoryName)
-    let targetOption = category?.Options.find(x => x.Name == option.Condition.Target.OptionName);
+    let targetOption = category?.Options.find(x => x.Type != "header" && x.Name == option.Condition.Target.OptionName);
     if (targetOption?.Condition && !this.conditionsMet(targetOption))
     {
       return false;
