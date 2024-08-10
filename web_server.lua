@@ -68,10 +68,28 @@ end
 
 
 
+-- If a plugin fails to upload due to a resolvable issue like a name that already exists
+-- The process is saved here so it can be resumed later on with the new information.
+local g_UploadsInProgress = {}
+
+
+
+
+
 
 
 --- Endpoint that allows users to upload new plugins.
 local function HandleEndpointUploadPlugin(a_Request)
+	if (a_Request.PostParams["resume"]) then
+		local reqId = a_Request.PostParams["resume"]
+		local newName = a_Request.PostParams["newname"]
+		local cor = g_UploadsInProgress[reqId]
+		local succes, res = coroutine.resume(cor, newName)
+		if (not res.ErrorCode) then
+			g_UploadsInProgress[reqId] = nil
+		end
+		return cJson:Serialize(res), "application/json"
+	end
 	local json = a_Request.PostParams["files"];
 	local zipname = a_Request.PostParams["zipname"];
 	local decoded = cJson:Parse(json);
@@ -99,17 +117,29 @@ local function HandleEndpointUploadPlugin(a_Request)
 		end
 	end
 
-	if (cFile:IsFolder(table.concat(path, cFile:GetPathSeparator()))) then
-		return [["The plugin \"]] .. pluginName .. [[\" already exists"]], "application/json"
+	local cor = coroutine.create(function(a_RequestId)
+		while (cFile:IsFolder(table.concat(path, cFile:GetPathSeparator()))) do
+			-- A plugin with the same name already exists.
+			-- Wait for a new name before resuming installing the plugin
+			local newName = coroutine.yield({Conflict = pluginName, RequestId = a_RequestId, ErrorCode = 409})
+			pluginName, path[2] = newName, newName
+		end
+		
+		process(path, hasRootFolder and decoded[keys[1]] or decoded)
+	
+		cPluginManager:Get():RefreshPluginList()
+		return {
+			Name =  pluginName,
+			Type = "bool"
+		}
+	end)
+
+	local requestId = cUUID:GenerateVersion3(tostring(math.random())):ToShortString()	
+	local success, res = coroutine.resume(cor, requestId)
+	if (res.ErrorCode) then
+		g_UploadsInProgress[requestId] = cor
 	end
-	process(path, hasRootFolder and decoded[keys[1]] or decoded)
-
-	cPluginManager:Get():RefreshPluginList()
-
-	return cJson:Serialize({
-		Name =  pluginName,
-		Type = "bool"
-	 }), "application/json"
+	return cJson:Serialize(res), "application/json"
 end
 
 

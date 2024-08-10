@@ -61,14 +61,39 @@ export class UploadComponent {
     }
     try {
       let option = await this.apiService.uploadPlugin(this.option.UploadUrl, event.target.files[0].name, output);
-      this.category.Options.push(option)
-      this.category.Options = this.category.Options.sort((x, y) => x.Type == "upload" ? -1 : x.Name.localeCompare(y.Name))
-      this.successMessage = `The plugin "${option.Name}" has been uploaded`
+      this.addNewOptionToCategory(option);
     } catch(e: any)
     {
+      if (e.ErrorCode == 409) {
+        let name: string | null = e.Conflict as string
+        while (true)
+        {
+          name = prompt(`A plugin with the name ${name} already exists. What should it be called instead?`)
+          if (name == null)
+          {
+            this.errorMessage = `Stopped installing plugin`;
+            return
+          }
+
+          try {
+            let option = await this.apiService.resumeUpload(this.option.UploadUrl, e.RequestId, name)
+            this.addNewOptionToCategory(option);
+            break;
+          }
+          catch(e)
+          {
+          }
+        }
+      }
       this.errorMessage = e.message;
     }
 
     event.target.value = null;
+  }
+
+  private addNewOptionToCategory(option: Option) {
+    this.category.Options.push(option);
+    this.category.Options = this.category.Options.sort((x, y) => x.Type == "upload" ? -1 : x.Name.localeCompare(y.Name));
+    this.successMessage = `The plugin "${option.Name}" has been uploaded`;
   }
 }

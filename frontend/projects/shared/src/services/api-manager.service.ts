@@ -91,11 +91,21 @@ export class ApiManagerService {
   
      
   async uploadPlugin(url: string, filename: string, zip: StructuredZipFile): Promise<Option> {
-    let option = await this.sendRequest<Option | string>(url, "post", "zipname=" + encodeURIComponent(filename) + "&files=" + encodeURIComponent(JSON.stringify(zip)), {'Content-Type': 'application/x-www-form-urlencoded'} )
-    if (typeof option == "string")
+    let option = await this.sendRequest<Option | any>(url, "post", "zipname=" + encodeURIComponent(filename) + "&files=" + encodeURIComponent(JSON.stringify(zip)), {'Content-Type': 'application/x-www-form-urlencoded'} )
+    if (option.ErrorCode)
     {
-      throw Error(option);
+      throw option;
     }
     return option;
+  }
+
+  async resumeUpload(url: string, id: string, newname: string): Promise<Option>
+  {
+    let response = await this.sendRequest<any>(url, "post", "resume=" + id + "&newname=" + newname, {'Content-Type': 'application/x-www-form-urlencoded'})
+    if (response.ErrorCode)
+    {
+      throw response
+    }
+    return response
   }
 }
