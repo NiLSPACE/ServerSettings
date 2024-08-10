@@ -188,6 +188,43 @@ g_WorldSettings =
         }
     },
     {
+        CategoryName = "Physics",
+        Options =
+        {
+            {
+                Name = "DeepSnow",
+                Type = "bool",
+            },
+            {
+                Name = "ShouldLavaSpawnFire",
+                Type = "bool",
+            },
+            {
+                Name = "TNTShrapnelLevel",
+                Type = "number",
+            },
+            {
+                Name = "WaterSimulator",
+                Type = "options",
+                SubOptions = {"Vanilla", "Floody", "Noop", "Vaporize"}
+            },
+            {
+                Name = "LavaSimulator",
+                Type = "options",
+                SubOptions = {"Vanilla", "Floody", "Noop", "Vaporize"}
+            },
+            {
+                Name = "RedstoneSimulator",
+                Type = "options",
+                SubOptions = {"Incremental", "Noop"}
+            },
+            {
+                Name = "SandInstantFall",
+                Type = "bool",
+            },
+        }
+    },
+    {
         CategoryName = "Mechanics",
         Options =
         {
