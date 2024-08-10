@@ -247,6 +247,12 @@ g_ServerSettingsOptions =
                 Name = "Enabled",
                 Type = "bool",
                 Description = "Whether RCON is enabled or not."
+            },
+            {
+                Name = "Password",
+                Type = "string",
+                Description = "The password which can be used to connect through RCON.",
+                Condition = CreateCondition("RCON", "Enabled", Method.Equals, "1")
             }
         }
     },

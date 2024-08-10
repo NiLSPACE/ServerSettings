@@ -85,3 +85,20 @@ end
 
 
 
+
+
+function CreateCondition(a_CategoryName, a_OptionName, a_Method, a_ExpectedValue)
+    return
+    {
+        Target =
+        {
+            CategoryName = a_CategoryName,
+            OptionName = a_OptionName,
+        },
+        Method = a_Method,
+        ExpectedValue = a_ExpectedValue
+    }
+end
+
+
+
