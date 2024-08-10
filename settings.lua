@@ -191,6 +191,16 @@ g_ServerSettingsOptions =
             },
         }
     },
+    FillMultiKeyCategory("settings.ini", {
+        CategoryName = "Worlds",
+        IsMultiKeyCategory = true,
+        RequiredKey = "DefaultWorld",
+        KeyName = "World",
+    }),
+    {
+        CategoryName = "WorldPaths",
+        Options = CollectWorldPaths()
+    },
     {
         CategoryName = "Plugins",
         Options = 
@@ -267,15 +277,4 @@ g_ServerSettingsOptions =
             }
         }
     },
-    FillMultiKeyCategory("settings.ini", {
-        CategoryName = "Worlds",
-        IsMultiKeyCategory = true,
-        RequiredKey = "DefaultWorld",
-        KeyName = "World",
-        -- Options = CollectWorlds(),
-    }),
-    {
-        CategoryName = "WorldPaths",
-        Options = CollectWorldPaths()
-    }
 }
