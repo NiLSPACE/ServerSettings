@@ -17,6 +17,23 @@ end
 
 
 
+function CollectWorldPaths()
+    local output = {}
+    cRoot:Get():ForEachWorld(function(a_World)
+        local path = a_World:GetDataPath()
+        table.insert(output, {
+            Name = a_World:GetName(),
+            OriginalValue = path,
+            CurrentValue = path,
+            Type = 'string'
+        })
+    end)
+    return output;
+end
+
+
+
+
 function FillMultiKeyCategory(a_Ini, a_Category)
     local ini = cIniFile()
     if (not ini:ReadFile(a_Ini)) then
@@ -256,5 +273,9 @@ g_ServerSettingsOptions =
         RequiredKey = "DefaultWorld",
         KeyName = "World",
         -- Options = CollectWorlds(),
-    })
+    }),
+    {
+        CategoryName = "WorldPaths",
+        Options = CollectWorldPaths()
+    }
 }
