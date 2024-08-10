@@ -356,6 +356,18 @@ g_WorldSettings =
             { Name = "DistortedHeightmapFrequencyY", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "DistortedHeightmap")},
             { Name = "DistortedHeightmapFrequencyZ", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "DistortedHeightmap")},
             
+            { Name = "EndGenMainIslandSize",    Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "End")},
+            { Name = "EndGenIslandThickness",   Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "End")},
+            { Name = "EndGenIslandYOffset",     Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "End")},
+            { Name = "EndGenMainFrequencyX",    Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "End")},
+            { Name = "EndGenMainFrequencyY",    Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "End")},
+            { Name = "EndGenMainFrequencyZ",    Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "End")},
+            { Name = "EndGenMainMinThreshold",  Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "End")},
+            { Name = "EndGenSmallFrequencyX",   Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "End")},
+            { Name = "EndGenSmallFrequencyY",   Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "End")},
+            { Name = "EndGenSmallFrequencyZ",   Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "End")},
+            { Name = "EndGenSmallMinThreshold", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "End")},
+            
             { Name = "TwoHeightsFrequencyX", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "TwoHeights")},
             { Name = "TwoHeightsFrequencyY", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "TwoHeights")},
             { Name = "TwoHeightsFrequencyZ", Type = "number", Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "TwoHeights")},
