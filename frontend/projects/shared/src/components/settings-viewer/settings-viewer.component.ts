@@ -40,16 +40,17 @@ export class SettingsViewerComponent {
     {
       return false;
     }
-    let optionValue = targetOption?.CurrentValue;
+    let optionValue = String(targetOption?.CurrentValue).toLowerCase();
     let expectedValues = (typeof condition.ExpectedValue == 'string' ? [condition.ExpectedValue] : condition.ExpectedValue)
     .map(x => x.trim().toLowerCase());
     if (option.Condition.Method == "equals") 
     {
-      return expectedValues.some(x => x == String(optionValue).toLowerCase())
+      return expectedValues.some(x => x == optionValue)
     }
     else
     {
-      return expectedValues.some(x => String(optionValue).toLowerCase().includes(x))
+      let split = optionValue.split(',').map(x => x.trim())
+      return expectedValues.some(x => split.some(y => y == x))
     }
   }
 
