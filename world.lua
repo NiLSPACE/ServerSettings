@@ -95,6 +95,25 @@ end
 
 
 
+
+local FluidSimulatorOptions =
+{
+    {
+        Name = "Falloff",
+        Type = "number",
+    },
+    {
+        Name = "TickDelay",
+        Type = "number",
+    },
+    {
+        Name = "NumNeighborsForSource",
+        Type = "number",
+    }
+}
+
+
+
 g_WorldSettings =
 {
     {
@@ -223,6 +242,16 @@ g_WorldSettings =
                 Type = "bool",
             },
         }
+    },
+    {
+        CategoryName = "WaterSimulator",
+        Options = FluidSimulatorOptions,
+        Condition = CreateCondition("Physics", "WaterSimulator", Method.Equals, {"Vanilla", "Floody"})
+    },
+    {
+        CategoryName = "LavaSimulator",
+        Options = FluidSimulatorOptions,
+        Condition = CreateCondition("Physics", "LavaSimulator", Method.Equals, {"Vanilla", "Floody"})
     },
     {
         CategoryName = "Mechanics",

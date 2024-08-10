@@ -4,7 +4,12 @@ export interface Settings
     Categories: Category[]
 }
 
-export interface Category
+export interface CanHaveCondition
+{
+    Condition: Condition,
+}
+
+export interface Category extends CanHaveCondition
 {
     CategoryName: string,
     IsMultiKeyCategory: boolean,
@@ -20,7 +25,7 @@ export interface SubOption
     PossibleArguments: string[]
 }
 
-export interface Option
+export interface Option extends CanHaveCondition
 {
     Name: string,
     Title: string | null,
@@ -29,14 +34,13 @@ export interface Option
     CurrentValue: string,
     UploadUrl: string,
     OriginalValue: string,
-    Condition: Condition,
     SubOptions: (string | SubOption)[]
 }
 
 export interface Condition
 {
     Target: OptionTarget
-    ExpectedValue: string
+    ExpectedValue: string | string[]
     Method: string
 }
 

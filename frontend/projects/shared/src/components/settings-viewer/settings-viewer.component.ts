@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 // import { ApiManagerService } from '../api-manager.service';
-import { Category, Settings, SubOption, Option } from '../../models/available-settings';
+import { Category, Settings, SubOption, Option, CanHaveCondition } from '../../models/available-settings';
 import { ChangesManagerService } from '../../services/changes-manager.service';
 // import { Option } from '';
 
@@ -27,26 +27,29 @@ export class SettingsViewerComponent {
     }
   }
 
-  conditionsMet(option: Option)
+  conditionsMet(option: CanHaveCondition)
   {
     if (option.Condition == null)
     {
       return true;
     }
-    let category = this.settings.Categories.find(x => x.CategoryName == option.Condition.Target.CategoryName)
-    let targetOption = category?.Options.find(x => x.Type != "header" && x.Name == option.Condition.Target.OptionName);
+    let condition = option.Condition;
+    let category = this.settings.Categories.find(x => x.CategoryName == condition.Target.CategoryName)
+    let targetOption = category?.Options.find(x => x.Type != "header" && x.Name == condition.Target.OptionName);
     if (targetOption?.Condition && !this.conditionsMet(targetOption))
     {
       return false;
     }
     let optionValue = targetOption?.CurrentValue;
+    let expectedValues = (typeof condition.ExpectedValue == 'string' ? [condition.ExpectedValue] : condition.ExpectedValue)
+    .map(x => x.trim().toLowerCase());
     if (option.Condition.Method == "equals") 
     {
-      return String(optionValue).toLowerCase() == option.Condition.ExpectedValue.toString().toLowerCase()
+      return expectedValues.some(x => x == String(optionValue).toLowerCase())
     }
     else
     {
-      return String(optionValue).toLowerCase().includes(option.Condition.ExpectedValue.toString().toLowerCase())
+      return expectedValues.some(x => String(optionValue).toLowerCase().includes(x))
     }
   }
 
