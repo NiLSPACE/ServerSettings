@@ -254,6 +254,28 @@ g_WorldSettings =
         Condition = CreateCondition("Physics", "LavaSimulator", Method.Equals, {"Vanilla", "Floody"})
     },
     {
+        CategoryName = "FireSimulator",
+        Options =
+        {
+            {
+                Name = "BurnStepTimeFuel",
+                Type = "number",
+            },
+            {
+                Name = "BurnStepTimeNonFuel",
+                Type = "number",
+            },
+            {
+                Name = "Flammability",
+                Type = "number",
+            },
+            {
+                Name = "ReplaceFuelChance",
+                Type = "number",
+            },
+        }
+    },
+    {
         CategoryName = "Mechanics",
         Options =
         {
