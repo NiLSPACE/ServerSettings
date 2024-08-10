@@ -5,8 +5,8 @@
 g_PluginInfo =
 {
 	Name = "ServerSettings",
-	Version = 1,
-	DisplayVersion = "0.1",
+	Version = 2,
+	DisplayVersion = "0.2",
 	SourceLocation = "https://github.com/NiLSPACE/ServerSettings",
 	DownloadLocation = "https://github.com/NiLSPACE/ServerSettings/releases",
 	Description = [[Adds webadmin tabs to more easily change the server settings. This includes:
