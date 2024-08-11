@@ -471,6 +471,10 @@ g_WorldSettings =
                 {
                     "Flat",
                     "Classic",
+                    "Steppy",
+                    "Mountains",
+                    "Biomal",
+                    "MinMax",
                 },
                 Condition = CreateCondition("Generator", "ShapeGen", Method.Equals, "HeightMap")
             },
